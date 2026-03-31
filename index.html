@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHOOD Garage Academy</title>
+
+<style>
+
+/* GENERAL */
+body {
+  font-family: Arial;
+  margin:0;
+  background:#111;
+  color:#fff;
+}
+
+header {
+  background:#000;
+  padding:20px;
+  text-align:center;
+}
+
+.logo-box {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+
+.logo-box img {
+  width:50px;
+  height:50px;
+  border-radius:50%;
+}
+
+nav {
+  background:#222;
+  text-align:center;
+  padding:15px;
+}
+
+nav a {
+  color:white;
+  margin:10px;
+  text-decoration:none;
+}
+
+/* SECTIONS */
+section {
+  padding:60px 20px;
+  max-width:1100px;
+  margin:auto;
+}
+
+/* HERO */
+.hero-img {
+  width:100%;
+  max-height:400px;
+  object-fit:cover;
+  border-radius:10px;
+  animation: zoom 6s infinite alternate;
+}
+
+/* SERVICES */
+.services, .reviews {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+
+.card {
+  background:#222;
+  padding:20px;
+  border-radius:10px;
+  text-align:center;
+}
+
+/* GALLERY */
+.gallery-container {
+  display:grid;
+  gap:20px;
+}
+
+.gallery-container img {
+  width:100%;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* BUTTON */
+.btn {
+  background:#38bdf8;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* FOOTER */
+footer {
+  background:#000;
+  text-align:center;
+  padding:20px;
+}
+
+/* ANIMATIONS */
+.fade-in {
+  opacity:0;
+  transform:translateY(30px);
+  animation:fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  to {opacity:1; transform:translateY(0);}
+}
+
+img:hover {
+  transform:scale(1.05);
+  transition:0.3s;
+}
+
+@keyframes zoom {
+  from {transform:scale(1);}
+  to {transform:scale(1.1);}
+}
+
+/* LIGHTBOX */
+.lightbox {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+.lightbox img {
+  max-width:90%;
+  max-height:80%;
+}
+
+.lightbox span {
+  position:absolute;
+  top:20px;
+  right:40px;
+  font-size:40px;
+  cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo-box">
+    <img src="khood1.jpg">
+    <h1>KHOOD GARAGE ACADEMY</h1>
+  </div>
+  <p>Professional Automotive Services Since 2021</p>
+</header>
+
+<nav>
+  <a href="#gallery">Gallery</a>
+  <a href="#services">Services</a>
+  <a href="#about">About</a>
+  <a href="#reviews">Reviews</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section>
+  <img src="khood2.jpg" class="hero-img">
+</section>
+
+<section id="gallery" class="fade-in">
+  <h2>Our Work</h2>
+
+  <div class="gallery-container">
+    <img src="khood1.jpg" onclick="openImage(this.src)">
+    <img src="khood2.jpg" onclick="openImage(this.src)">
+    <img src="khood3.jpg" onclick="openImage(this.src)">
+  </div>
+</section>
+
+<section class="fade-in">
+  <h2>Work in Action</h2>
+  <video width="100%" controls>
+    <source src="video.mp4" type="video/mp4">
+  </video>
+</section>
+
+<section id="services" class="fade-in">
+  <h2>Our Services</h2>
+  <div class="services">
+    <div class="card">Engine Repair</div>
+    <div class="card">Body Work</div>
+    <div class="card">Paint & Graphics</div>
+    <div class="card">Tire Diagnostics</div>
+    <div class="card">LED Lights Fixation</div>
+    <div class="card">Music Installation</div>
+    <div class="card">CCTV Installation</div>
+  </div>
+</section>
+
+<section id="about" class="fade-in">
+  <h2>About Us</h2>
+  <p>
+    Founded in 2021, KHOOD GARAGE ACADEMY offers professional car repair services.
+    Parking fees may apply depending on duration.
+    24hr CCTV security ensures your vehicle is safe.
+  </p>
+  <p><b>Hours:</b> 7AM - 6PM</p>
+  <p><b>Location:</b> Mombasa, Kwa Bulo</p>
+</section>
+
+<section id="reviews" class="fade-in">
+  <h2>Customer Reviews</h2>
+  <div class="reviews">
+    <div class="card">⭐⭐⭐⭐⭐ Excellent service!</div>
+    <div class="card">⭐⭐⭐⭐ Reliable team</div>
+    <div class="card">⭐⭐⭐⭐⭐ Best garage in Mombasa</div>
+  </div>
+</section>
+
+<section id="contact" class="fade-in">
+  <h2>Contact</h2>
+  <p><b>Phone:</b> +254 790 884715</p>
+  <a href="https://wa.me/254790884715">
+    <button class="btn">WhatsApp</button>
+  </a>
+</section>
+
+<footer>
+  <p>KHOOD GARAGE ACADEMY</p>
+  <p>Mombasa, Kwa Bulo</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span onclick="closeImage()">&times;</span>
+  <img id="lightbox-img">
+</div>
+
+<script>
+function openImage(src){
+  document.getElementById("lightbox").style.display="flex";
+  document.getElementById("lightbox-img").src=src;
+}
+
+function closeImage(){
+  document.getElementById("lightbox").style.display="none";
+}
+</script>
+
+</body>
+</html>
