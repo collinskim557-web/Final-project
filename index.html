@@ -230,7 +230,24 @@ img:hover {
     <div class="card">⭐⭐⭐⭐⭐ Best garage in Mombasa</div>
   </div>
 </section>
+<section id="booking">
+  <h2>Parking Booking</h2>
 
+  <div class="card">
+    <input type="text" id="car" placeholder="Car Plate / Name" style="width:100%; padding:10px; margin:10px 0;">
+    
+    <label>Check-in Date:</label>
+    <input type="date" id="checkin" style="width:100%; padding:10px; margin:10px 0;">
+    
+    <label>Check-out Date:</label>
+    <input type="date" id="checkout" style="width:100%; padding:10px; margin:10px 0;">
+    
+    <button class="btn" onclick="saveBooking()">Save Booking</button>
+  </div>
+
+  <h3>Bookings</h3>
+  <div id="bookingList"></div>
+</section>
 <section id="contact" class="fade-in">
   <h2>Contact</h2>
 
