@@ -286,6 +286,46 @@ function closeImage(){
   document.getElementById("lightbox").style.display="none";
 }
 </script>
+<script>
+let bookings = [];
 
+function saveBooking() {
+  let car = document.getElementById("car").value;
+  let checkin = document.getElementById("checkin").value;
+  let checkout = document.getElementById("checkout").value || "Check-out later";
+
+  if (!car || !checkin) {
+    alert("Please fill car and check-in date");
+    return;
+  }
+
+  let booking = { car, checkin, checkout };
+  bookings.push(booking);
+
+  displayBookings();
+}
+
+function displayBookings() {
+  let list = document.getElementById("bookingList");
+  list.innerHTML = "";
+
+  bookings.forEach((b, index) => {
+    list.innerHTML += `
+      <div class="card">
+        <p><b>Car:</b> ${b.car}</p>
+        <p><b>Check-in:</b> ${b.checkin}</p>
+        <p><b>Check-out:</b> ${b.checkout}</p>
+        <button class="btn" onclick="checkoutNow(${index})">Check Out Now</button>
+      </div>
+    `;
+  });
+}
+
+function checkoutNow(index) {
+  let today = new Date().toISOString().split("T")[0];
+  bookings[index].checkout = today;
+  displayBookings();
+}
+</script>
 </body>
 </html>
