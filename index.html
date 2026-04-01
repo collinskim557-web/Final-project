@@ -159,7 +159,7 @@ img:hover {
 <header>
   <div class="logo-box">
     <img src="khood1.jpg">
-    <h1>KHOOD GARAGE ACADEMY</h1>
+    <h1 ondblclick="enableManager()">KHOOD GARAGE ACADEMY</h1>
   </div>
   <p>Professional Automotive Services Since 2021</p>
 </header>
@@ -288,8 +288,26 @@ function closeImage(){
 }
 </script>
 <script>
-let bookings = [];
 
+// 🔐 Manager mode
+let isManager = false;
+
+function enableManager() {
+  let password = prompt("usiwaze 🔐");
+
+  if (password === "0726507281") {
+    isManager = true;
+    alert("Manager mode enabled");
+    displayBookings();
+  } else {
+    alert("Wrong code");
+  }
+}
+
+// 💾 Load saved bookings
+let bookings = JSON.parse(localStorage.getItem("khoodBookings")) || [];
+
+// ➕ Save booking
 function saveBooking() {
   let car = document.getElementById("car").value;
   let checkin = document.getElementById("checkin").value;
@@ -303,9 +321,13 @@ function saveBooking() {
   let booking = { car, checkin, checkout };
   bookings.push(booking);
 
+  // SAVE
+  localStorage.setItem("khoodBookings", JSON.stringify(bookings));
+
   displayBookings();
 }
 
+// 📋 Display bookings
 function displayBookings() {
   let list = document.getElementById("bookingList");
   list.innerHTML = "";
@@ -316,24 +338,41 @@ function displayBookings() {
         <p><b>Car:</b> ${b.car}</p>
         <p><b>Check-in:</b> ${b.checkin}</p>
         <p><b>Check-out:</b> ${b.checkout}</p>
-        <button class="btn" onclick="checkoutNow(${index})">Check Out Now</button>
-<button class="btn" style="background:red;" onclick="deleteBooking(${index})">Delete</button>
+
+        <button class="btn" onclick="checkoutNow(${index})">Check Out</button>
+
+        ${isManager ? `<button class="btn" style="background:red;" onclick="deleteBooking(${index})">Delete</button>` : ""}
       </div>
     `;
   });
 }
 
+// ❌ Delete booking (manager only)
+function deleteBooking(index) {
+  if (confirm("Delete this booking?")) {
+    bookings.splice(index, 1);
+
+    // SAVE AFTER DELETE
+    localStorage.setItem("khoodBookings", JSON.stringify(bookings));
+
+    displayBookings();
+  }
+}
+
+// 🚗 Checkout update
 function checkoutNow(index) {
   let today = new Date().toISOString().split("T")[0];
   bookings[index].checkout = today;
+
+  // SAVE AFTER UPDATE
+  localStorage.setItem("khoodBookings", JSON.stringify(bookings));
+
   displayBookings();
 }
-  function deleteBooking(index) {
-  if (confirm("Delete this booking?")) {
-    bookings.splice(index, 1);
-    displayBookings();
-  }
-  }
+
+// 🔄 Load bookings when page opens
+displayBookings();
+
 </script>
 </body>
 </html>
