@@ -316,6 +316,7 @@ function displayBookings() {
         <p><b>Check-in:</b> ${b.checkin}</p>
         <p><b>Check-out:</b> ${b.checkout}</p>
         <button class="btn" onclick="checkoutNow(${index})">Check Out Now</button>
+<button class="btn" style="background:red;" onclick="deleteBooking(${index})">Delete</button>
       </div>
     `;
   });
@@ -326,6 +327,12 @@ function checkoutNow(index) {
   bookings[index].checkout = today;
   displayBookings();
 }
+  function deleteBooking(index) {
+  if (confirm("Delete this booking?")) {
+    bookings.splice(index, 1);
+    displayBookings();
+  }
+  }
 </script>
 </body>
 </html>
