@@ -304,8 +304,21 @@ function enableManager() {
   }
 }
 
-// 💾 Load saved bookings
+// 💾 Load bookings
 let bookings = JSON.parse(localStorage.getItem("khoodBookings")) || [];
+
+// 📅 Calculate days
+function calculateDays(checkin, checkout) {
+  let start = new Date(checkin);
+  let end = checkout === "Check-out later"
+    ? new Date()
+    : new Date(checkout);
+
+  let diffTime = end - start;
+  let days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  return days > 0 ? days : 1;
+}
 
 // ➕ Save booking
 function saveBooking() {
@@ -314,14 +327,13 @@ function saveBooking() {
   let checkout = document.getElementById("checkout").value || "Check-out later";
 
   if (!car || !checkin) {
-    alert("Please fill car and check-in date");
+    alert("Fill car and check-in date");
     return;
   }
 
   let booking = { car, checkin, checkout };
   bookings.push(booking);
 
-  // SAVE
   localStorage.setItem("khoodBookings", JSON.stringify(bookings));
 
   displayBookings();
@@ -333,44 +345,64 @@ function displayBookings() {
   list.innerHTML = "";
 
   bookings.forEach((b, index) => {
+
+    let days = calculateDays(b.checkin, b.checkout);
+
     list.innerHTML += `
       <div class="card">
         <p><b>Car:</b> ${b.car}</p>
         <p><b>Check-in:</b> ${b.checkin}</p>
         <p><b>Check-out:</b> ${b.checkout}</p>
+        <p><b>Days:</b> ${days} day(s)</p>
 
         <button class="btn" onclick="checkoutNow(${index})">Check Out</button>
 
-        ${isManager ? `<button class="btn" style="background:red;" onclick="deleteBooking(${index})">Delete</button>` : ""}
+        ${isManager ? `
+          <button class="btn" onclick="editBooking(${index})">Edit ✏️</button>
+          <button class="btn" style="background:red;" onclick="deleteBooking(${index})">Delete</button>
+        ` : ""}
       </div>
     `;
   });
 }
 
-// ❌ Delete booking (manager only)
+// ✏️ Edit booking
+function editBooking(index) {
+  let newCar = prompt("Edit Car:", bookings[index].car);
+  let newCheckin = prompt("Edit Check-in (YYYY-MM-DD):", bookings[index].checkin);
+  let newCheckout = prompt("Edit Check-out:", bookings[index].checkout);
+
+  if (newCar) bookings[index].car = newCar;
+  if (newCheckin) bookings[index].checkin = newCheckin;
+  if (newCheckout) bookings[index].checkout = newCheckout;
+
+  localStorage.setItem("khoodBookings", JSON.stringify(bookings));
+
+  displayBookings();
+}
+
+// ❌ Delete
 function deleteBooking(index) {
   if (confirm("Delete this booking?")) {
     bookings.splice(index, 1);
 
-    // SAVE AFTER DELETE
     localStorage.setItem("khoodBookings", JSON.stringify(bookings));
 
     displayBookings();
   }
 }
 
-// 🚗 Checkout update
+// 🚗 Checkout
 function checkoutNow(index) {
   let today = new Date().toISOString().split("T")[0];
   bookings[index].checkout = today;
 
-  // SAVE AFTER UPDATE
   localStorage.setItem("khoodBookings", JSON.stringify(bookings));
 
   displayBookings();
 }
 
-// 🔄 Load bookings when page opens
+// 🔄 Load on start
 displayBookings();
 
 </script>
