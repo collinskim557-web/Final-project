@@ -9,229 +9,227 @@
 body { font-family: Arial; margin:0; background:#111; color:#fff; }
 header { background:#000; padding:20px; text-align:center; }
 
-.logo-box { display:flex; align-items:center; justify-content:center; gap:10px; }
-.logo-box img { width:50px; height:50px; border-radius:50%; }
+.logo-box { display:flex; justify-content:center; align-items:center; gap:10px; }
+.logo-box img { width:50px; border-radius:50%; }
 
 nav { background:#222; text-align:center; padding:15px; }
 nav a { color:white; margin:10px; text-decoration:none; }
 
 section { padding:40px 20px; max-width:1100px; margin:auto; }
 
-.gallery-container {
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap:15px;
-}
+.gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; }
+.gallery img { width:100%; border-radius:10px; cursor:pointer; }
 
-.gallery-container img {
-  width:100%;
-  border-radius:10px;
-  cursor:pointer;
-}
+.card { background:#222; padding:15px; border-radius:10px; margin:10px 0; }
 
-.card {
-  background:#222;
-  padding:15px;
-  border-radius:10px;
-  margin:10px 0;
-}
+.btn { background:#38bdf8; padding:10px; border:none; border-radius:6px; cursor:pointer; }
 
-.btn {
-  background:#38bdf8;
-  padding:10px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  margin:5px;
-}
-
-footer {
-  background:#000;
-  text-align:center;
-  padding:20px;
-}
-
-.lightbox {
+.whatsapp {
   position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.9);
-  display:none;
-  align-items:center;
-  justify-content:center;
+  bottom:20px;
+  right:20px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.whatsapp a {
+  background:#25D366;
+  padding:12px;
+  border-radius:50%;
+  text-align:center;
+  color:white;
+  text-decoration:none;
+  font-size:18px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
+<header ondblclick="loginManager()">
   <div class="logo-box">
     <img src="khood1.jpg">
-    <h1 ondblclick="enableManager()">KHOOD GARAGE ACADEMY</h1>
+    <h1>KHOOD GARAGE ACADEMY</h1>
   </div>
+  <p>Professional Automotive Services</p>
 </header>
 
 <nav>
   <a href="#gallery">Gallery</a>
   <a href="#services">Services</a>
-  <a href="#about">About</a>
   <a href="#booking">Booking</a>
   <a href="#contact">Contact</a>
 </nav>
 
-<!-- GALLERY FIRST -->
+<!-- GALLERY -->
 <section id="gallery">
-<h2>Our Work</h2>
-<div class="gallery-container">
-<img src="khood1.jpg" onclick="openImage(this.src)">
-<img src="khood2.jpg" onclick="openImage(this.src)">
-<img src="khood3.jpg" onclick="openImage(this.src)">
-<img src="khood4.jpg" onclick="openImage(this.src)">
-<img src="khood5.jpg" onclick="openImage(this.src)">
-<img src="khood6.jpg" onclick="openImage(this.src)">
-<img src="khood7.jpg" onclick="openImage(this.src)">
-<img src="khood8.jpg" onclick="openImage(this.src)">
-<img src="khood9.jpg" onclick="openImage(this.src)">
-<img src="khood10.jpg" onclick="openImage(this.src)">
-<img src="khood11.jpg" onclick="openImage(this.src)">
-<img src="khood12.jpg" onclick="openImage(this.src)">
-</div>
+  <h2>Our Work</h2>
+  <div class="gallery">
+    <img src="khood1.jpg">
+    <img src="khood2.jpg">
+    <img src="khood3.jpg">
+    <img src="khood4.jpg">
+    <img src="khood5.jpg">
+  <img src="khood6.jpg">
+  <img src="khood7.jpg">
+  <img src="khood8.jpg">
+  <img src="khood9.jpg">
+  <img src="khood10.jpg">
+  <img src="khood11.jpg">
+  <img src="khood12.jpg">
+  </div>
 </section>
 
 <!-- SERVICES -->
 <section id="services">
-<h2>Services</h2>
-<div class="card">Engine Repair</div>
-<div class="card">Body Work</div>
-<div class="card">Tyre Repair</div>
-<div class="card">Lighting Fix</div>
-<div class="card">Music Installation</div>
-<div class="card">CCTV Installation</div>
+  <h2>Our Services</h2>
+  <div class="card">Engine Repair</div>
+  <div class="card">Body Work & Painting</div>
+  <div class="card">Tyre Services</div>
+  <div class="card">Lighting & Electrical</div>
+  <div class="card">CCTV Installation</div>
+</section>
+
+<!-- VIDEO -->
+<section>
+  <h2>Work in Action</h2>
+  <video width="100%" controls>
+    <source src="video.mp4" type="video/mp4">
+  </video>
 </section>
 
 <!-- BOOKING -->
 <section id="booking">
-<h2>Booking</h2>
+  <h2>Parking Booking</h2>
 
-<div class="card">
-<input id="car" placeholder="Car Plate" style="width:100%; padding:10px;"><br><br>
-<input type="date" id="checkin" style="width:100%; padding:10px;"><br><br>
-<input type="date" id="checkout" style="width:100%; padding:10px;"><br><br>
+  <div class="card">
+    <input id="plate" placeholder="Car Plate" style="width:100%;padding:10px"><br><br>
+    <input type="date" id="checkin" style="width:100%;padding:10px"><br><br>
+    <input type="date" id="checkout" style="width:100%;padding:10px"><br><br>
+    <button class="btn" onclick="saveBooking()">Save Booking</button>
+  </div>
 
-<button class="btn" onclick="saveBooking()">Save Booking</button>
-</div>
-
-<div id="bookingList"></div>
+  <h3>Bookings</h3>
+  <div id="bookingList"></div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
-<h2>Contact</h2>
-
-<p>Main: +254 790 884715</p>
-<button class="btn" onclick="whatsappMain()">WhatsApp Main</button>
-
-<p>Manager: +254 726 507281</p>
-<button class="btn" onclick="whatsappManager()">WhatsApp Manager</button>
-
+  <h2>Contact</h2>
+  <p>Main: 0790884715</p>
+  <p>Manager: 0726507281</p>
 </section>
 
-  <section id="about">
-<h2>About</h2>
-<div class="card">
-KHOOD Garage Academy provides professional automotive services and secure parking.<br>
-📍 Mombasa, Kwa Bulo<br>
-🕒 7AM – 6PM<br>
-🔐 24hr CCTV Security
+<!-- ABOUT (NOW BELOW CONTACT ✅) -->
+<section>
+  <h2>About Us</h2>
+  <p>KHOOD Garage Academy is a professional automotive center offering repair, maintenance, training, and parking services. We focus on quality service, reliability, and modern solutions including CCTV installation.</p>
+</section>
+
+<footer>
+  <p>© 2026 KHOOD Garage</p>
+</footer>
+
+<!-- WHATSAPP BUTTONS -->
+<div class="whatsapp">
+  <a href="https://wa.me/254790884715" target="_blank">💬</a>
+  <a href="https://wa.me/254726507281" target="_blank">💬</a>
 </div>
-  </section>
-<footer>© 2026 KHOOD</footer>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="this.style.display='none'">
-<img id="lightbox-img">
-</div>
-
-<script>
-function openImage(src){
-  document.getElementById("lightbox").style.display="flex";
-  document.getElementById("lightbox-img").src=src;
-}
-
-// MANAGER
-let isManager = false;
-function enableManager(){
-  let pass = prompt("Enter code");
-  if(pass==="0726507281"){ isManager=true; alert("Manager ON"); }
-}
-
-// DAYS
-function calculateDays(a,b){
-  let start=new Date(a);
-  let end=b?new Date(b):new Date();
-  return Math.ceil((end-start)/(1000*60*60*24))||1;
-}
-
-// WHATSAPP
-function whatsappMain(){
-  window.open("https://wa.me/254790884715?text=Hello%20Khood%20Garage");
-}
-function whatsappManager(){
-  window.open("https://wa.me/254726507281?text=Hello%20Manager");
-}
-</script>
-
-<!-- FIREBASE FIX -->
+<!-- FIREBASE + JS -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getDatabase, ref, push, onValue } 
+import { getDatabase, ref, push, onValue, remove, update } 
 from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
 
-const app = initializeApp({
-apiKey: "AIzaSyDBx0qgCaXrj04sdnUtJcASqD1FvsFdkE8",
-databaseURL: "https://khood-garage-default-rtdb.europe-west1.firebasedatabase.app"
-});
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "khood-garage.firebaseapp.com",
+  databaseURL: "https://khood-garage-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "khood-garage",
+  storageBucket: "khood-garage.appspot.com",
+  messagingSenderId: "340475285788",
+  appId: "1:340475285788:web:59cbc536398554b563ead9"
+};
 
+const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// SAVE (FIXED)
-window.saveBooking = function(){
-let car=document.getElementById("car").value;
-let checkin=document.getElementById("checkin").value;
-let checkout=document.getElementById("checkout").value;
+let isManager = false;
 
-if(!car||!checkin){ alert("Fill fields"); return; }
+// LOGIN
+window.loginManager = function() {
+  let pass = prompt("Enter Manager Password");
+  if (pass === "Usiwazekhood") {
+    isManager = true;
+    alert("Manager Mode ON");
+  }
+};
 
-push(ref(db,"bookings"),{car,checkin,checkout});
+// DAYS
+function calculateDays(checkin, checkout) {
+  let start = new Date(checkin);
+  let end = checkout ? new Date(checkout) : new Date();
+  let diff = end - start;
+  return Math.ceil(diff / (1000*60*60*24)) || 1;
+}
 
-alert("Saved ✅");
+// SAVE
+window.saveBooking = function() {
+  let plate = document.getElementById("plate").value;
+  let checkin = document.getElementById("checkin").value;
+  let checkout = document.getElementById("checkout").value;
 
-// CLEAR
-document.getElementById("car").value="";
-document.getElementById("checkin").value="";
-document.getElementById("checkout").value="";
+  if (!plate || !checkin) {
+    alert("Fill all fields");
+    return;
+  }
+
+  push(ref(db,"bookings"), {
+    plate,
+    checkin,
+    checkout: checkout || "Open"
+  });
 };
 
 // LOAD
-onValue(ref(db,"bookings"),snap=>{
-let data=snap.val();
-let box=document.getElementById("bookingList");
-box.innerHTML="";
+onValue(ref(db,"bookings"), snapshot => {
+  let data = snapshot.val();
+  let container = document.getElementById("bookingList");
+  container.innerHTML = "";
 
-for(let id in data){
-let b=data[id];
-let days=calculateDays(b.checkin,b.checkout);
+  for (let id in data) {
+    let b = data[id];
+    let days = calculateDays(b.checkin, b.checkout === "Open" ? "" : b.checkout);
 
-box.innerHTML+=`
-<div class="card">
-<b>${b.car}</b><br>
-${b.checkin} → ${b.checkout||"Open"}<br>
-Days: ${days}
-</div>`;
-}
+    container.innerHTML += `
+      <div class="card">
+        <b>${b.plate}</b>
+        <p>${b.checkin} → ${b.checkout}</p>
+        <p>Days: ${days}</p>
+
+        ${isManager ? `
+          <button onclick="deleteBooking('${id}')">Delete</button>
+          <button onclick="editBooking('${id}')">Edit</button>
+        ` : ""}
+      </div>
+    `;
+  }
 });
+
+// DELETE
+window.deleteBooking = function(id) {
+  remove(ref(db,"bookings/"+id));
+};
+
+// EDIT
+window.editBooking = function(id) {
+  let plate = prompt("New Plate:");
+  if (plate) {
+    update(ref(db,"bookings/"+id), { plate });
+  }
+};
 </script>
 
 </body>
-</html>
+  </html>
