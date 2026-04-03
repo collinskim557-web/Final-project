@@ -251,6 +251,13 @@ window.editBooking = function(id) {
     update(ref(db, "bookings/" + id), { plate });
   }
 };
+  window.checkoutBooking = function(id) {
+  let today = new Date().toISOString().split("T")[0];
+
+  update(ref(db, "bookings/" + id), {
+    checkout: today
+  });
+};
 
 // 🚀 LOAD ON START
 loadBookings();
