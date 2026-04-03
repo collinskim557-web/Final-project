@@ -157,24 +157,30 @@ const db = getDatabase(app);
 
 let isManager = false;
 
-// LOGIN
+// 🔐 LOGIN
 window.loginManager = function() {
   let pass = prompt("Enter Manager Password");
+
   if (pass === "Usiwazekhood") {
     isManager = true;
     alert("Manager Mode ON");
+
+    // 🔥 reload bookings with manager buttons
+    loadBookings();
+  } else {
+    alert("Wrong password");
   }
 };
 
-// DAYS
+// 📅 CALCULATE DAYS
 function calculateDays(checkin, checkout) {
   let start = new Date(checkin);
   let end = checkout ? new Date(checkout) : new Date();
   let diff = end - start;
-  return Math.ceil(diff / (1000*60*60*24)) || 1;
+  return Math.ceil(diff / (1000 * 60 * 60 * 24)) || 1;
 }
 
-// SAVE
+// 💾 SAVE BOOKING
 window.saveBooking = function() {
   let plate = document.getElementById("plate").value;
   let checkin = document.getElementById("checkin").value;
@@ -185,50 +191,68 @@ window.saveBooking = function() {
     return;
   }
 
-  push(ref(db,"bookings"), {
+  push(ref(db, "bookings"), {
     plate,
     checkin,
     checkout: checkout || "Open"
   });
+
+  // clear form
+  document.getElementById("plate").value = "";
+  document.getElementById("checkin").value = "";
+  document.getElementById("checkout").value = "";
 };
 
-// LOAD
-onValue(ref(db,"bookings"), snapshot => {
-  let data = snapshot.val();
-  let container = document.getElementById("bookingList");
-  container.innerHTML = "";
+// 📥 LOAD BOOKINGS (FIXED)
+function loadBookings() {
+  onValue(ref(db, "bookings"), snapshot => {
+    let data = snapshot.val();
+    let container = document.getElementById("bookingList");
+    container.innerHTML = "";
 
-  for (let id in data) {
-    let b = data[id];
-    let days = calculateDays(b.checkin, b.checkout === "Open" ? "" : b.checkout);
+    if (!data) {
+      container.innerHTML = "No bookings";
+      return;
+    }
 
-    container.innerHTML += `
-      <div class="card">
-        <b>${b.plate}</b>
-        <p>${b.checkin} → ${b.checkout}</p>
-        <p>Days: ${days}</p>
+    for (let id in data) {
+      let b = data[id];
+      let days = calculateDays(
+        b.checkin,
+        b.checkout === "Open" ? "" : b.checkout
+      );
 
-        ${isManager ? `
-          <button onclick="deleteBooking('${id}')">Delete</button>
-          <button onclick="editBooking('${id}')">Edit</button>
-        ` : ""}
-      </div>
-    `;
-  }
-});
+      container.innerHTML += `
+        <div class="card">
+          <b>${b.plate}</b>
+          <p>${b.checkin} → ${b.checkout}</p>
+          <p>Days: ${days}</p>
 
-// DELETE
+          ${isManager ? `
+            <button onclick="deleteBooking('${id}')">Delete</button>
+            <button onclick="editBooking('${id}')">Edit</button>
+          ` : ""}
+        </div>
+      `;
+    }
+  });
+}
+
+// 🗑️ DELETE
 window.deleteBooking = function(id) {
-  remove(ref(db,"bookings/"+id));
+  remove(ref(db, "bookings/" + id));
 };
 
-// EDIT
+// ✏️ EDIT
 window.editBooking = function(id) {
   let plate = prompt("New Plate:");
   if (plate) {
-    update(ref(db,"bookings/"+id), { plate });
+    update(ref(db, "bookings/" + id), { plate });
   }
 };
+
+// 🚀 LOAD ON START
+loadBookings();
 </script>
 
 </body>
