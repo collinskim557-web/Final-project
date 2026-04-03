@@ -6,132 +6,60 @@
 <title>KHOOD Garage Academy</title>
 
 <style>
+body { font-family: Arial; margin:0; background:#111; color:#fff; }
+header { background:#000; padding:20px; text-align:center; }
 
-/* GENERAL */
-body {
-  font-family: Arial;
-  margin:0;
-  background:#111;
-  color:#fff;
-}
+.logo-box { display:flex; align-items:center; justify-content:center; gap:10px; }
+.logo-box img { width:50px; height:50px; border-radius:50%; }
 
-header {
-  background:#000;
-  padding:20px;
-  text-align:center;
-}
+nav { background:#222; text-align:center; padding:15px; }
+nav a { color:white; margin:10px; text-decoration:none; }
 
-.logo-box {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-}
+section { padding:40px 20px; max-width:1100px; margin:auto; }
 
-.logo-box img {
-  width:50px;
-  height:50px;
-  border-radius:50%;
-}
-
-nav {
-  background:#222;
-  text-align:center;
-  padding:15px;
-}
-
-nav a {
-  color:white;
-  margin:10px;
-  text-decoration:none;
-}
-
-/* SECTIONS */
-section {
-  padding:60px 20px;
-  max-width:1100px;
-  margin:auto;
-}
-
-/* HERO */
-.hero-img {
-  width:100%;
-  max-height:400px;
-  object-fit:cover;
-  border-radius:10px;
-  animation: zoom 6s infinite alternate;
-}
-
-/* SERVICES */
-.services, .reviews {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-}
-
-.card {
-  background:#222;
-  padding:20px;
-  border-radius:10px;
-  text-align:center;
-}
-
-/* GALLERY */
 .gallery-container {
   display:grid;
-  gap:20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap:15px;
 }
 
 .gallery-container img {
   width:100%;
   border-radius:10px;
   cursor:pointer;
+  transition:0.3s;
 }
 
-/* BUTTON */
+.gallery-container img:hover {
+  transform:scale(1.05);
+}
+
+.card {
+  background:#222;
+  padding:15px;
+  border-radius:10px;
+  margin:10px 0;
+}
+
 .btn {
   background:#38bdf8;
-  padding:12px;
+  padding:10px;
   border:none;
-  border-radius:8px;
+  border-radius:6px;
   cursor:pointer;
 }
 
-/* FOOTER */
 footer {
   background:#000;
   text-align:center;
   padding:20px;
 }
 
-/* ANIMATIONS */
-.fade-in {
-  opacity:0;
-  transform:translateY(30px);
-  animation:fadeIn 1s forwards;
-}
-
-@keyframes fadeIn {
-  to {opacity:1; transform:translateY(0);}
-}
-
-img:hover {
-  transform:scale(1.05);
-  transition:0.3s;
-}
-
-@keyframes zoom {
-  from {transform:scale(1);}
-  to {transform:scale(1.1);}
-}
-
-/* LIGHTBOX */
+/* Lightbox */
 .lightbox {
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  top:0; left:0;
+  width:100%; height:100%;
   background:rgba(0,0,0,0.9);
   display:none;
   align-items:center;
@@ -140,17 +68,7 @@ img:hover {
 
 .lightbox img {
   max-width:90%;
-  max-height:80%;
 }
-
-.lightbox span {
-  position:absolute;
-  top:20px;
-  right:40px;
-  font-size:40px;
-  cursor:pointer;
-}
-
 </style>
 </head>
 
@@ -161,254 +79,177 @@ img:hover {
     <img src="khood1.jpg">
     <h1 ondblclick="enableManager()">KHOOD GARAGE ACADEMY</h1>
   </div>
-  <p>Professional Automotive Services Since 2021</p>
+  <p>Professional Automotive Services</p>
 </header>
 
 <nav>
   <a href="#gallery">Gallery</a>
-  <a href="#services">Services</a>
-  <a href="#about">About</a>
-  <a href="#reviews">Reviews</a>
   <a href="#booking">Booking</a>
   <a href="#contact">Contact</a>
 </nav>
 
-<section>
-  <img src="khood2.jpg" class="hero-img">
-</section>
-
-<section id="gallery" class="fade-in">
+<!-- GALLERY -->
+<section id="gallery">
   <h2>Our Work</h2>
-
   <div class="gallery-container">
-  <img src="khood1.jpg" onclick="openImage(this.src)">
-  <img src="khood2.jpg" onclick="openImage(this.src)">
-  <img src="khood3.jpg" onclick="openImage(this.src)">
-  <img src="khood4.jpg" onclick="openImage(this.src)">
-  <img src="khood5.jpg" onclick="openImage(this.src)">
-  <img src="khood6.jpg" onclick="openImage(this.src)">
-  <img src="khood7.jpg" onclick="openImage(this.src)">
-  <img src="khood8.jpg" onclick="openImage(this.src)">
-  <img src="khood9.jpg" alt="Khood 9">
-  <img src="khood10.jpg" alt="Khood 10">
-  <img src="khood11.jpg" alt="Khood 11">
-  <img src="khood12.jpg" alt="Khood 12">
+    <img src="khood1.jpg" onclick="openImage(this.src)">
+    <img src="khood2.jpg" onclick="openImage(this.src)">
+    <img src="khood3.jpg" onclick="openImage(this.src)">
+    <img src="khood4.jpg" onclick="openImage(this.src)">
+    <img src="khood5.jpg" onclick="openImage(this.src)">
+    <img src="khood6.jpg" onclick="openImage(this.src)">
+    <img src="khood7.jpg" onclick="openImage(this.src)">
+    <img src="khood8.jpg" onclick="openImage(this.src)">
+    <img src="khood9.jpg" onclick="openImage(this.src)">
+    <img src="khood10.jpg" onclick="openImage(this.src)">
+    <img src="khood11.jpg" onclick="openImage(this.src)">
+    <img src="khood12.jpg" onclick="openImage(this.src)">
   </div>
 </section>
 
-<section class="fade-in">
+<!-- VIDEO -->
+<section>
   <h2>Work in Action</h2>
   <video width="100%" controls>
     <source src="video.mp4" type="video/mp4">
+    Your browser does not support video.
   </video>
 </section>
 
-<section id="services" class="fade-in">
-  <h2>Our Services</h2>
-  <div class="services">
-    <div class="card">Engine Repair</div>
-    <div class="card">Body Work</div>
-    <div class="card">Paint & Graphics</div>
-    <div class="card">Tire Diagnostics</div>
-    <div class="card">LED Lights Fixation</div>
-    <div class="card">Music Installation</div>
-    <div class="card">CCTV Installation</div>
-  </div>
-</section>
-
-<section id="about" class="fade-in">
-  <h2>About Us</h2>
-  <p>
-    Founded in 2021, KHOOD GARAGE ACADEMY offers professional car repair services.
-    Parking fees may apply depending on duration.
-    24hr CCTV security ensures your vehicle is safe.
-  </p>
-  <p><b>Hours:</b> 7AM - 6PM</p>
-  <p><b>Location:</b> Mombasa, Kwa Bulo</p>
-</section>
-
-<section id="reviews" class="fade-in">
-  <h2>Customer Reviews</h2>
-  <div class="reviews">
-    <div class="card">⭐⭐⭐⭐⭐ Excellent service!</div>
-    <div class="card">⭐⭐⭐⭐ Reliable team</div>
-    <div class="card">⭐⭐⭐⭐⭐ Best garage in Mombasa</div>
-  </div>
-</section>
+<!-- BOOKING -->
 <section id="booking">
   <h2>Parking Booking</h2>
 
   <div class="card">
-    <input type="text" id="car" placeholder="Car Plate / Name" style="width:100%; padding:10px; margin:10px 0;">
-    
-    <label>Check-in Date:</label>
-    <input type="date" id="checkin" style="width:100%; padding:10px; margin:10px 0;">
-    
-    <label>Check-out Date:</label>
-    <input type="date" id="checkout" style="width:100%; padding:10px; margin:10px 0;">
-    
+    <input id="car" placeholder="Car Plate" style="width:100%; padding:10px;"><br><br>
+    <input type="date" id="checkin" style="width:100%; padding:10px;"><br><br>
+    <input type="date" id="checkout" style="width:100%; padding:10px;"><br><br>
+
     <button class="btn" onclick="saveBooking()">Save Booking</button>
   </div>
 
   <h3>Bookings</h3>
   <div id="bookingList"></div>
 </section>
-<section id="contact" class="fade-in">
+
+<!-- CONTACT -->
+<section id="contact">
   <h2>Contact</h2>
-
-  <p><b>Main Phone:</b> +254 790 884715</p>
-
-  <p><b>Manager:</b> +254 726 507281</p>
-
-  <a href="https://wa.me/254790884715">
-    <button class="btn">Chat Main Line</button>
-  </a>
-
-  <a href="https://wa.me/254726507281">
-    <button class="btn">Chat Manager</button>
-  </a>
+  <p>Main: +254 790 884715</p>
+  <p>Manager: +254 726 507281</p>
 </section>
 
-  <footer>
-  <p>KHOOD GARAGE ACADEMY</p>
-  <p>Mombasa, Kwa Bulo</p>
+<footer>
   <p>© 2026 All Rights Reserved</p>
-  </footer>
+</footer>
 
 <!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <span onclick="closeImage()">&times;</span>
+<div class="lightbox" id="lightbox" onclick="closeImage()">
   <img id="lightbox-img">
 </div>
 
 <script>
+// IMAGE VIEW
 function openImage(src){
   document.getElementById("lightbox").style.display="flex";
   document.getElementById("lightbox-img").src=src;
 }
-
 function closeImage(){
   document.getElementById("lightbox").style.display="none";
 }
-</script>
-<script>
 
-// 🔐 Manager mode
+// MANAGER MODE
 let isManager = false;
-
 function enableManager() {
-  let password = prompt("usiwaze 🔐");
-
-  if (password === "0726507281") {
+  let pass = prompt("Enter manager code");
+  if (pass === "0726507281") {
     isManager = true;
-    alert("Manager mode enabled");
-    displayBookings();
-  } else {
-    alert("Wrong code");
+    alert("Manager mode ON");
   }
 }
 
-// 💾 Load bookings
-let bookings = JSON.parse(localStorage.getItem("khoodBookings")) || [];
-
-// 📅 Calculate days
+// AUTO DAYS
 function calculateDays(checkin, checkout) {
   let start = new Date(checkin);
-  let end = checkout === "Check-out later"
-    ? new Date()
-    : new Date(checkout);
-
-  let diffTime = end - start;
-  let days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
+  let end = checkout ? new Date(checkout) : new Date();
+  let diff = end - start;
+  let days = Math.ceil(diff / (1000 * 60 * 60 * 24));
   return days > 0 ? days : 1;
 }
+</script>
 
-// ➕ Save booking
-function saveBooking() {
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, remove } 
+from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDBx0qgCaXrj04sdnUtJcASqD1FvsFdkE8",
+  authDomain: "khood-garage.firebaseapp.com",
+  databaseURL: "https://khood-garage-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "khood-garage",
+  storageBucket: "khood-garage.firebasestorage.app",
+  messagingSenderId: "340475285788",
+  appId: "1:340475285788:web:59cbc536398554b563ead9"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// SAVE
+window.saveBooking = function() {
   let car = document.getElementById("car").value;
   let checkin = document.getElementById("checkin").value;
-  let checkout = document.getElementById("checkout").value || "Check-out later";
+  let checkout = document.getElementById("checkout").value || "";
 
   if (!car || !checkin) {
-    alert("Fill car and check-in date");
+    alert("Fill all fields");
     return;
   }
 
-  let booking = { car, checkin, checkout };
-  bookings.push(booking);
+  let days = calculateDays(checkin, checkout);
 
-  localStorage.setItem("khoodBookings", JSON.stringify(bookings));
+  push(ref(db, "bookings"), {
+    car,
+    checkin,
+    checkout: checkout || "Not set",
+    days
+  });
+};
 
-  displayBookings();
-}
+// LOAD
+onValue(ref(db, "bookings"), (snapshot) => {
+  let data = snapshot.val();
+  let container = document.getElementById("bookingList");
+  container.innerHTML = "";
 
-// 📋 Display bookings
-function displayBookings() {
-  let list = document.getElementById("bookingList");
-  list.innerHTML = "";
+  if (!data) {
+    container.innerHTML = "No bookings";
+    return;
+  }
 
-  bookings.forEach((b, index) => {
+  for (let id in data) {
+    let b = data[id];
+    let days = calculateDays(b.checkin, b.checkout === "Not set" ? "" : b.checkout);
 
-    let days = calculateDays(b.checkin, b.checkout);
-
-    list.innerHTML += `
+    container.innerHTML += `
       <div class="card">
-        <p><b>Car:</b> ${b.car}</p>
-        <p><b>Check-in:</b> ${b.checkin}</p>
-        <p><b>Check-out:</b> ${b.checkout}</p>
-        <p><b>Days:</b> ${days} day(s)</p>
+        <p><b>${b.car}</b></p>
+        <p>${b.checkin} → ${b.checkout}</p>
+        <p>Days: ${days}</p>
 
-        <button class="btn" onclick="checkoutNow(${index})">Check Out</button>
-
-        ${isManager ? `
-          <button class="btn" onclick="editBooking(${index})">Edit ✏️</button>
-          <button class="btn" style="background:red;" onclick="deleteBooking(${index})">Delete</button>
-        ` : ""}
+        ${isManager ? `<button onclick="deleteBooking('${id}')">Delete</button>` : ""}
       </div>
     `;
-  });
-}
-
-// ✏️ Edit booking
-function editBooking(index) {
-  let newCar = prompt("Edit Car:", bookings[index].car);
-  let newCheckin = prompt("Edit Check-in (YYYY-MM-DD):", bookings[index].checkin);
-  let newCheckout = prompt("Edit Check-out:", bookings[index].checkout);
-
-  if (newCar) bookings[index].car = newCar;
-  if (newCheckin) bookings[index].checkin = newCheckin;
-  if (newCheckout) bookings[index].checkout = newCheckout;
-
-  localStorage.setItem("khoodBookings", JSON.stringify(bookings));
-
-  displayBookings();
-}
-
-// ❌ Delete
-function deleteBooking(index) {
-  if (confirm("Delete this booking?")) {
-    bookings.splice(index, 1);
-
-    localStorage.setItem("khoodBookings", JSON.stringify(bookings));
-
-    displayBookings();
   }
-}
+});
 
-// 🚗 Checkout
-function checkoutNow(index) {
-  let today = new Date().toISOString().split("T")[0];
-  bookings[index].checkout = today;
-
-  localStorage.setItem("khoodBookings", JSON.stringify(bookings));
-
-  displayBookings();
-}
-
-// 🔄 Load on start
-displayBookings();
-
+// DELETE
+window.deleteBooking = function(id) {
+  remove(ref(db, "bookings/" + id));
+};
 </script>
+
 </body>
 </html>
