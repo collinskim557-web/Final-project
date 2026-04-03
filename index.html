@@ -246,10 +246,29 @@ window.deleteBooking = function(id) {
 
 // ✏️ EDIT
 window.editBooking = function(id) {
-  let plate = prompt("New Plate:");
-  if (plate) {
-    update(ref(db, "bookings/" + id), { plate });
-  }
+  let bookingRef = ref(db, "bookings/" + id);
+
+  onValue(bookingRef, snapshot => {
+    let b = snapshot.val();
+
+    let plate = prompt("Edit plate:", b.plate);
+    if (!plate) return;
+
+    let checkin = prompt("Edit check-in (YYYY-MM-DD):", b.checkin);
+    if (!checkin) return;
+
+    let checkout = prompt(
+      "Edit check-out (leave empty if still parked):",
+      b.checkout === "Open" ? "" : b.checkout
+    );
+
+    update(ref(db, "bookings/" + id), {
+      plate: plate,
+      checkin: checkin,
+      checkout: checkout || "Open"
+    });
+
+  }, { onlyOnce: true });
 };
   window.checkoutBooking = function(id) {
   let today = new Date().toISOString().split("T")[0];
