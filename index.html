@@ -27,11 +27,6 @@ section { padding:40px 20px; max-width:1100px; margin:auto; }
   width:100%;
   border-radius:10px;
   cursor:pointer;
-  transition:0.3s;
-}
-
-.gallery-container img:hover {
-  transform:scale(1.05);
 }
 
 .card {
@@ -47,6 +42,7 @@ section { padding:40px 20px; max-width:1100px; margin:auto; }
   border:none;
   border-radius:6px;
   cursor:pointer;
+  margin:5px 0;
 }
 
 footer {
@@ -66,9 +62,7 @@ footer {
   justify-content:center;
 }
 
-.lightbox img {
-  max-width:90%;
-}
+.lightbox img { max-width:90%; }
 </style>
 </head>
 
@@ -83,10 +77,41 @@ footer {
 </header>
 
 <nav>
+  <a href="#services">Services</a>
+  <a href="#about">About</a>
   <a href="#gallery">Gallery</a>
   <a href="#booking">Booking</a>
   <a href="#contact">Contact</a>
 </nav>
+
+<!-- SERVICES -->
+<section id="services">
+  <h2>Our Services</h2>
+
+  <div class="card">Engine Repair</div>
+  <div class="card">Body Work & Painting</div>
+  <div class="card">Tyre Repair & Replacement</div>
+  <div class="card">Lighting & Electrical Fix</div>
+  <div class="card">Music Installation</div>
+  <div class="card">CCTV Installation</div>
+  <div class="card">Car Parking Services</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2>About Us</h2>
+  <div class="card">
+    <p>
+      KHOOD Garage Academy is a professional automotive service center and training hub.
+      We provide high-quality repair, maintenance, and secure parking services.
+    </p>
+    <p>
+      📍 Location: Mombasa, Kwa Bulo<br>
+      🕒 Open: 7AM – 6PM<br>
+      🔐 24/7 CCTV Security Available
+    </p>
+  </div>
+</section>
 
 <!-- GALLERY -->
 <section id="gallery">
@@ -112,7 +137,6 @@ footer {
   <h2>Work in Action</h2>
   <video width="100%" controls>
     <source src="video.mp4" type="video/mp4">
-    Your browser does not support video.
   </video>
 </section>
 
@@ -137,6 +161,8 @@ footer {
   <h2>Contact</h2>
   <p>Main: +254 790 884715</p>
   <p>Manager: +254 726 507281</p>
+
+  <button class="btn" onclick="contactWhatsApp()">Chat on WhatsApp</button>
 </section>
 
 <footer>
@@ -168,24 +194,29 @@ function enableManager() {
   }
 }
 
-// AUTO DAYS
+// DAYS
 function calculateDays(checkin, checkout) {
   let start = new Date(checkin);
   let end = checkout ? new Date(checkout) : new Date();
   let diff = end - start;
-  let days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-  return days > 0 ? days : 1;
+  return Math.ceil(diff / (1000 * 60 * 60 * 24)) || 1;
+}
+
+// WHATSAPP CONTACT
+function contactWhatsApp() {
+  let msg = "Hello, I want to inquire about your garage services";
+  window.open("https://wa.me/254790884715?text=" + encodeURIComponent(msg));
 }
 </script>
 
 <!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, remove } 
+import { getDatabase, ref, push, onValue, remove, update } 
 from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDBx0qgCaXrj04sdnUtJcASqD1FvsFdkE8",
+  apiKey: "YOUR-API-KEY",
   authDomain: "khood-garage.firebaseapp.com",
   databaseURL: "https://khood-garage-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "khood-garage",
@@ -201,21 +232,15 @@ const db = getDatabase(app);
 window.saveBooking = function() {
   let car = document.getElementById("car").value;
   let checkin = document.getElementById("checkin").value;
-  let checkout = document.getElementById("checkout").value || "";
+  let checkout = document.getElementById("checkout").value || "Not set";
 
-  if (!car || !checkin) {
-    alert("Fill all fields");
-    return;
-  }
+  if (!car || !checkin) return alert("Fill all fields");
 
-  let days = calculateDays(checkin, checkout);
+  push(ref(db, "bookings"), { car, checkin, checkout });
 
-  push(ref(db, "bookings"), {
-    car,
-    checkin,
-    checkout: checkout || "Not set",
-    days
-  });
+  document.getElementById("car").value = "";
+  document.getElementById("checkin").value = "";
+  document.getElementById("checkout").value = "";
 };
 
 // LOAD
@@ -224,22 +249,25 @@ onValue(ref(db, "bookings"), (snapshot) => {
   let container = document.getElementById("bookingList");
   container.innerHTML = "";
 
-  if (!data) {
-    container.innerHTML = "No bookings";
-    return;
-  }
+  if (!data) return container.innerHTML = "No bookings";
 
   for (let id in data) {
     let b = data[id];
     let days = calculateDays(b.checkin, b.checkout === "Not set" ? "" : b.checkout);
+    let total = days * 200;
 
     container.innerHTML += `
       <div class="card">
         <p><b>${b.car}</b></p>
         <p>${b.checkin} → ${b.checkout}</p>
         <p>Days: ${days}</p>
+        <p>Total: Ksh ${total}</p>
 
-        ${isManager ? `<button onclick="deleteBooking('${id}')">Delete</button>` : ""}
+        <button onclick="checkoutNow('${id}')">Check Out</button>
+
+        ${isManager ? `
+          <button onclick="deleteBooking('${id}')">Delete</button>
+        ` : ""}
       </div>
     `;
   }
@@ -249,7 +277,13 @@ onValue(ref(db, "bookings"), (snapshot) => {
 window.deleteBooking = function(id) {
   remove(ref(db, "bookings/" + id));
 };
+
+// CHECKOUT
+window.checkoutNow = function(id) {
+  let today = new Date().toISOString().split("T")[0];
+  update(ref(db, "bookings/" + id), { checkout: today });
+};
 </script>
 
 </body>
-</html>
+  </html>
