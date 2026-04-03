@@ -229,9 +229,10 @@ function loadBookings() {
           <p>Days: ${days}</p>
 
           ${isManager ? `
-            <button onclick="deleteBooking('${id}')">Delete</button>
-            <button onclick="editBooking('${id}')">Edit</button>
-          ` : ""}
+  <button onclick="checkoutBooking('${id}')">Checkout</button>
+  <button onclick="editBooking('${id}')">Edit</button>
+  <button onclick="deleteBooking('${id}')">Delete</button>
+` : ""}
         </div>
       `;
     }
