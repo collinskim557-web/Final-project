@@ -161,6 +161,13 @@ section { padding:40px 20px; max-width:1100px; margin:auto; }
   </div>
 
   <h3>Bookings</h3>
+  <input 
+  type="text" 
+  id="searchInput" 
+  placeholder="Search by car plate..." 
+  style="width:100%;padding:10px;margin-bottom:10px;border-radius:6px;border:none;"
+  onkeyup="filterBookings()"
+/>
   <div id="bookingList"></div>
 </section>
 
@@ -343,6 +350,20 @@ window.editBooking = function(id) {
 
 // 🚀 LOAD ON START
 loadBookings();
+  // 🔍 SEARCH FILTER
+window.filterBookings = function() {
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let cards = document.querySelectorAll("#bookingList .card");
+
+  cards.forEach(card => {
+    let text = card.innerText.toLowerCase();
+    if (text.includes(input)) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+};
 </script>
 
 </body>
